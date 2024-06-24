@@ -23,9 +23,9 @@ docker cp 02-spark-sql/data/sample.csv spark-spark-worker-1:/data/spark-sql
 ## 2. Chạy chương trình
 
 ```shell
-docker run -ti --name spark-sql \ 
+docker run -ti --name spark-sql \
 --network=streaming-network \
 -v ./:/spark \
--v spark_data:/data \ 
+-v spark_data:/data \
 unigap/spark:3.5 spark-submit /spark/02-spark-sql/spark_sql.py
 ```
