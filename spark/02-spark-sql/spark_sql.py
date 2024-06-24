@@ -30,8 +30,9 @@ if __name__ == '__main__':
                 col('Country'),
                 f.when(col('Gender') == 'Male', 1).otherwise(0).alias('num_male'),
                 f.when(col('Gender') == 'Female', 1).otherwise(0).alias('num_female')) \
-        .groupBy('Country', 'Gender') \
+        .groupBy('Country') \
         .agg(f.sum('num_male').alias('num_male'),
-             f.sum('num_female').alias('num_female'))
+             f.sum('num_female').alias('num_female')) \
+        .orderBy('Country')
 
     genderDf.show()
