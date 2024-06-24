@@ -25,6 +25,10 @@ if __name__ == '__main__':
         .otherwise(col('Gender')) \
         .alias('Gender')
 
+    x = surveyDf.select(genderCol, col('Country'), col('Gender').alias('origin_gender'))
+
+    x.show()
+
     genderDf = surveyDf \
         .select(genderCol,
                 col('Country'),
