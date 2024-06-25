@@ -23,6 +23,8 @@ docker cp 02-spark-sql/data/sample.csv spark-spark-worker-1:/data/spark-sql
 ## 2. Chạy chương trình
 
 ```shell
+docker container stop spark-sql || true &&
+docker container rm spark-sql || true &&
 docker run -ti --name spark-sql \
 --network=streaming-network \
 -v ./:/spark \
