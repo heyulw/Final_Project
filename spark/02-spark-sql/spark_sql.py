@@ -21,22 +21,18 @@ if __name__ == '__main__':
 
     countDf.show()
 
-    genderCol = f.when(col('Gender') == 'M', 'Male') \
-        .otherwise(col('Gender')) \
-        .alias('Gender')
-
-    x = surveyDf.select(genderCol, col('Country'), col('Gender').alias('origin_gender'))
-
-    x.show()
-
     genderDf = surveyDf \
-        .select(genderCol,
-                col('Country')) \
-        .withColumn('num_male', f.when(col('Gender') == 'Male', 1).otherwise(0)) \
-        .withColumn('num_female', f.when(col('Gender') == 'Female', 1).otherwise(0)) \
+        .select(col('Gender'),
+                col('Country'),
+                f.when(('Male' == col('Gender')) | ('M' == col('Gender')), 1).otherwise(0).alias('num_male'),
+                f.when('Female' == col('Gender'), 1).otherwise(0).alias('num_female'))
+
+    genderDf.show()
+
+    aggDf = genderDf \
         .groupBy('Country') \
         .agg(f.sum('num_male').alias('num_male'),
              f.sum('num_female').alias('num_female')) \
         .orderBy('Country')
 
-    genderDf.show()
+    aggDf.show()
