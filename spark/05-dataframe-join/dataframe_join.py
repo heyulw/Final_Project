@@ -1,9 +1,12 @@
+import datetime
 import os
 
 from pyspark.sql import SparkSession
 
 import util.config as conf
 from util.logger import Log4j
+from pyspark.sql.functions import col
+from pyspark.sql import functions as f
 
 if __name__ == '__main__':
     working_dir = os.getcwd()
@@ -26,13 +29,11 @@ if __name__ == '__main__':
     log.info("flight_time_df2 schema:")
     flight_time_df2.printSchema()
 
-    join_df = flight_time_df1.join(flight_time_df2, flight_time_df1.id == flight_time_df2.id, "inner")
+    join_df = flight_time_df1.join(flight_time_df2, "id", "inner")
 
     log.info("join_df schema:")
     join_df.printSchema()
 
     join_df.show()
-
-    join_df.select("id").show()
 
     spark.stop()
