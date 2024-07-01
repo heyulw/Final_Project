@@ -5,31 +5,31 @@ Tại thư mục `spark`, chạy các lệnh sau:
 **Tạo thư mục:**
 
 ```shell
-docker exec -ti spark-spark-worker-1 mkdir -p /data/window-function
+docker exec -ti spark-spark-worker-1 mkdir -p /data/udf
 ```
 
 **Kiểm tra:**
 
 ```shell
-docker exec -ti spark-spark-worker-1 ls -la /data/window-function
+docker exec -ti spark-spark-worker-1 ls -la /data/udf
 ```
 
 **Copy file từ host vào trong container:**
 
 ```shell
-docker cp 06-window-function/data/summary.parquet spark-spark-worker-1:/data/window-function/
+docker cp 07-udf/data/survey.csv spark-spark-worker-1:/data/udf/
 ```
 
 ## 2. Chạy chương trình
 
 ```shell
-docker container stop window-function || true &&
-docker container rm window-function || true &&
-docker run -ti --name window-function \
+docker container stop udf || true &&
+docker container rm udf || true &&
+docker run -ti --name udf \
 --network=streaming-network \
 -v ./:/spark \
 -v spark_data:/data \
-unigap/spark:3.5 spark-submit /spark/06-window-function/window_function.py
+unigap/spark:3.5 spark-submit /spark/07-udf/udf.py
 ```
 
 ## 3. Yêu cầu

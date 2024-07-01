@@ -26,15 +26,15 @@ if __name__ == '__main__':
     log.info("summary_df:")
     summary_df.show()
 
-    running_total_window = Window.partitionBy("Country") \
-        .orderBy("WeekNumber") \
-        .rowsBetween(-2, Window.currentRow)
+    country_window = Window.partitionBy("Country") \
+        .orderBy("WeekNumber")
 
-    running_total_df = summary_df.withColumn("RunningTotal",
-                                             f.sum("InvoiceValue").over(running_total_window))
+    row_num_df = summary_df.withColumn("RowNum", f.row_number().over(country_window))
 
-    log.info("running_total_df schema:")
-    running_total_df.printSchema()
+    log.info("row_num_df schema:")
+    row_num_df.printSchema()
 
-    log.info("running_total_df:")
-    running_total_df.show()
+    log.info("row_num_df:")
+    row_num_df.show()
+
+    spark.stop()
