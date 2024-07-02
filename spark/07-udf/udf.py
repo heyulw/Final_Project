@@ -1,11 +1,9 @@
 import os
 import re
-import sys
 
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col
 from pyspark.sql.functions import udf, expr
-from pyspark.sql.types import StringType, LongType
+from pyspark.sql.types import StringType
 
 import util.config as conf
 from util.logger import Log4j
@@ -19,18 +17,6 @@ def parse_gender(gender):
     if re.search(female_pattern, gender.lower()):
         return "Female"
     return "Unknown"
-
-
-def get_min_no_employees(no_employees: str):
-    if "More than " in no_employees:
-        return int(no_employees.replace("More than ", ""))
-    return int(no_employees.split("-")[0])
-
-
-def get_max_no_employees(no_employees: str):
-    if "More than " in no_employees:
-        return sys.maxsize
-    return int(no_employees.split("-")[1])
 
 
 if __name__ == '__main__':
@@ -59,7 +45,9 @@ if __name__ == '__main__':
         if "parse_gender" in r.name:
             log.info(r)
 
-    survey_df.withColumn("Gender", parse_gender_udf("Gender")).show()
+    survey_df.withColumn("Gender", parse_gender_udf("Gender")) \
+        .select("Age", "Gender", "Country", "state", "no_employees") \
+        .show()
 
     spark.udf.register("parse_gender_udf", parse_gender, StringType())
     log.info("Catalog Entry:")
@@ -67,16 +55,8 @@ if __name__ == '__main__':
         if "parse_gender" in r.name:
             log.info(r)
 
-    survey_df.withColumn("Gender", expr("parse_gender_udf(Gender)")).show()
-
-    min_no_employees_udf = udf(get_min_no_employees, returnType=LongType())
-    max_no_employees_udf = udf(get_max_no_employees, returnType=LongType())
-
-    survey_df \
-        .withColumn("MinNoEmployees", min_no_employees_udf("no_employees")) \
-        .withColumn("MaxNoEmployees", max_no_employees_udf("no_employees")) \
-        .filter(col("MinNoEmployees") > 200) \
-        .select("MinNoEmployees", "MaxNoEmployees") \
+    survey_df.withColumn("Gender", expr("parse_gender_udf(Gender)")) \
+        .select("Age", "Gender", "Country", "state", "no_employees") \
         .show()
 
     spark.stop()

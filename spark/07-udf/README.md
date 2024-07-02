@@ -36,40 +36,19 @@ unigap/spark:3.5 spark-submit /spark/07-udf/udf.py
 
 ### 3.1 Yêu cầu 1
 
-Viết chương trình lấy ra danh sách các quốc gia, tuần, số hóa đơn, tổng số sản phẩm, tổng giá trị hóa đơn và xếp hạng
-theo tiêu chí tổng số tiền nhiều nhất trên từng quốc gia
+Viết chương trình lấy ra danh sách các bản ghi có số lượng employees lớn hơn hoặc bằng 500
 
-Dữ liệu sắp theo tên quốc gia và xếp hạng tăng dần.
-
-Ví dụ kết quả:
-
-| Country   | WeekNumber | NumInvoices | TotalQuantity | InvoiceValue | rank |
-|-----------|------------|-------------|---------------|--------------|------|
-| Australia | 50         | 2           | 133           | 387.95       | 1    |
-| Australia | 48         | 1           | 107           | 358.25       | 2    |
-| Australia | 49         | 1           | 214           | 258.9        | 3    |
-| Austria   | 50         | 2           | 3             | 257.04       | 1    |
-| Bahrain   | 51         | 1           | 54            | 205.74       | 1    |
-| Belgium   | 51         | 2           | 942           | 838.65       | 1    |
-| Belgium   | 50         | 2           | 285           | 625.16       | 2    |
-| Belgium   | 48         | 1           | 528           | 346.1        | 3    |
-
-### 3.2 Yêu cầu 2
-
-Viết chương trình lấy ra danh sách các quốc gia, tuần, số hóa đơn, số sản phẩm, giá trị hóa đơn và tổng giá trị hóa đơn
-tính tính đến tuần của bản ghi hiện tại, phần trăm tăng của giá trị hóa đơn so với tuần trước đó.
-
-Dữ liệu sắp xếp theo tên quốc gia, tuần.
+Gợi ý: viết 1 hàm udf để xử lý dữ liệu trên cột `no_employees`
 
 Ví dụ kết quả:
 
-| Country   | WeekNumber | NumInvoices | TotalQuantity | InvoiceValue | PercentGrowth | AccumulateValue |
-|-----------|------------|-------------|---------------|--------------|---------------|-----------------|
-| Australia | 48         | 1           | 107           | 358.25       | 0.0           | 358.25          |
-| Australia | 49         | 1           | 214           | 258.9        | -27.73        | 617.15          |
-| Australia | 50         | 2           | 133           | 387.95       | 49.85         | 1005.1          |
-| Austria   | 50         | 2           | 3             | 257.04       | 0.0           | 257.04          |
-| Bahrain   | 51         | 1           | 54            | 205.74       | 0.0           | 205.74          |
-| Belgium   | 48         | 1           | 528           | 346.1        | 0.0           | 346.1           |
-| Belgium   | 50         | 2           | 285           | 625.16       | 80.63         | 971.26          |
-| Belgium   | 51         | 2           | 942           | 838.65       | 34.15         | 1809.91         |
+| Age | Gender | Country        | state | no_employees   |
+|-----|--------|----------------|-------|----------------|
+| 44  | Male   | United States  | IN    | More than 1000 |
+| 36  | Male   | United States  | CT    | 500-1000       |
+| 41  | Male   | United States  | IA    | More than 1000 |
+| 35  | Male   | United States  | TN    | More than 1000 |
+| 30  | Male   | United Kingdom | NA    | 500-1000       |
+| 35  | Male   | United States  | TX    | More than 1000 |
+| 35  | Male   | United States  | MI    | More than 1000 |
+| 44  | Male   | United States  | IA    | More than 1000 |
