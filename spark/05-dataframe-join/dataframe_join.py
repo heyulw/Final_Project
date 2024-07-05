@@ -1,12 +1,9 @@
-import datetime
 import os
 
 from pyspark.sql import SparkSession
 
 import util.config as conf
 from util.logger import Log4j
-from pyspark.sql.functions import col
-from pyspark.sql import functions as f
 
 if __name__ == '__main__':
     working_dir = os.getcwd()
