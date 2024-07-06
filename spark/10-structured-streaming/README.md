@@ -12,13 +12,13 @@ alpine:3.14 \
 ## 2. Chạy chương trình
 
 ```shell
-docker container stop spark-streaming || true &&
-docker container rm spark-streaming || true &&
-docker run -ti --name spark-streaming \
+docker container stop structured-streaming || true &&
+docker container rm structured-streaming || true &&
+docker run -ti --name structured-streaming \
 --network=streaming-network \
 -v ./:/spark \
 unigap/spark:3.5 spark-submit \
-/spark/09-spark-streaming/spark_streaming.py
+/spark/09-spark-streaming/structured_streaming.py
 ```
 
 ## 3. Yêu cầu
