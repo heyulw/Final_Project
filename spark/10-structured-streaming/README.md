@@ -18,7 +18,7 @@ docker run -ti --name structured-streaming \
 --network=streaming-network \
 -v ./:/spark \
 unigap/spark:3.5 spark-submit \
-/spark/09-spark-streaming/structured_streaming.py
+/spark/10-structured-streaming/structured_streaming.py
 ```
 
 ## 3. Yêu cầu

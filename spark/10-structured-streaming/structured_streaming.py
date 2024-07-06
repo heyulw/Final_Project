@@ -1,3 +1,4 @@
+import pyspark.sql.functions as f
 from pyspark.sql import SparkSession
 
 from util.config import Config
@@ -16,13 +17,28 @@ if __name__ == '__main__':
 
     log.info(f"nc_conf: {nc_conf}")
 
-    socketDF = spark \
+    socket_df = spark \
         .readStream \
         .format("socket") \
         .option("host", nc_conf.host) \
         .option("port", nc_conf.port) \
         .load()
 
-    socketDF.isStreaming()  # Returns True for DataFrames that have streaming sources
+    log.info(f"isStreaming: {socket_df.isStreaming}")
 
-    socketDF.printSchema()
+    socket_df.printSchema()
+
+    count_df = socket_df \
+        .withColumn("word", f.explode(f.split("value", " "))) \
+        .groupBy("word") \
+        .agg(f.count("*").alias("count"))
+
+    streaming_query = count_df.writeStream \
+        .format("console") \
+        .outputMode("update") \
+        .trigger(processingTime="5 seconds") \
+        .start()
+
+    count_df.collect()
+
+    streaming_query.awaitTermination()
