@@ -5,7 +5,9 @@ import util.config as conf
 from util.logger import Log4j
 
 if __name__ == "__main__":
-    spark_conf = conf.get_spark_conf()
+    conf = conf.Config()
+    spark_conf = conf.spark_conf
+    nc_conf = conf.nc_conf
 
     spark = SparkSession.builder \
         .config(conf=spark_conf) \
@@ -13,12 +15,14 @@ if __name__ == "__main__":
 
     log = Log4j(spark)
 
+    log.info(f"nc_conf: {nc_conf}")
+
     # Create a local StreamingContext with two working thread and batch interval of 1 second
     sc = spark.sparkContext
     ssc = StreamingContext(sc, 5)
 
     # Create a DStream that will connect to hostname:port, like localhost:9999
-    lines = ssc.socketTextStream("netcat", 9999)
+    lines = ssc.socketTextStream(nc_conf.host, nc_conf.port)
 
     # Split each line into words
     words = lines.flatMap(lambda line: line.split(" "))
