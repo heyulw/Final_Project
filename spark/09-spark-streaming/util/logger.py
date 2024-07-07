@@ -17,7 +17,7 @@ class Log4j:
         self.logger.info(message)
 
     def warn(self, message):
-        self.warn(message)
+        self.logger.warn(message)
 
     def error(self, message):
-        self.error(message)
+        self.logger.error(message)

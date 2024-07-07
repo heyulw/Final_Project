@@ -35,10 +35,8 @@ if __name__ == '__main__':
 
     streaming_query = count_df.writeStream \
         .format("console") \
-        .outputMode("update") \
-        .trigger(processingTime="5 seconds") \
+        .outputMode("complete") \
+        .trigger(processingTime="20 seconds") \
         .start()
-
-    count_df.collect()
 
     streaming_query.awaitTermination()

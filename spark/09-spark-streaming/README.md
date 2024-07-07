@@ -6,7 +6,7 @@ docker container rm netcat || true &&
 docker run -ti --name netcat \
 --network=streaming-network \
 alpine:3.14 \
-/bin/sh -c "nc -l -p 9999"
+/bin/sh -c "apk add --no-cache netcat-openbsd && nc -lk 9999"
 ```
 
 ## 2. Chạy chương trình

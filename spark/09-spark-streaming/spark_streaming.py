@@ -19,7 +19,7 @@ if __name__ == "__main__":
 
     # Create a local StreamingContext with two working thread and batch interval of 1 second
     sc = spark.sparkContext
-    ssc = StreamingContext(sc, 5)
+    ssc = StreamingContext(sc, 20)
 
     # Create a DStream that will connect to hostname:port, like localhost:9999
     lines = ssc.socketTextStream(nc_conf.host, nc_conf.port)
