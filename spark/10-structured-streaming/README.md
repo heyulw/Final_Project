@@ -16,6 +16,7 @@ docker container stop structured-streaming || true &&
 docker container rm structured-streaming || true &&
 docker run -ti --name structured-streaming \
 --network=streaming-network \
+-p 4040:4040 \
 -v ./:/spark \
 unigap/spark:3.5 spark-submit \
 /spark/10-structured-streaming/structured_streaming.py

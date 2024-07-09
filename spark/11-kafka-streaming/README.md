@@ -17,6 +17,7 @@ docker container stop kafka-streaming || true &&
 docker container rm kafka-streaming || true &&
 docker run -ti --name kafka-streaming \
 --network=streaming-network \
+-p 4040:4040 \
 -v ./:/spark \
 -v spark_lib:/opt/bitnami/spark/.ivy2 \
 -e KAFKA_BOOTSTRAP_SERVERS='HOST1:HOST1,HOST2:PORT2,HOST3:PORT3' \

@@ -16,6 +16,7 @@ docker container stop spark-streaming || true &&
 docker container rm spark-streaming || true &&
 docker run -ti --name spark-streaming \
 --network=streaming-network \
+-p 4040:4040 \
 -v ./:/spark \
 unigap/spark:3.5 spark-submit \
 /spark/09-spark-streaming/spark_streaming.py
