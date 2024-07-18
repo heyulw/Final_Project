@@ -33,7 +33,7 @@ Trong đó các thông tin về `HOST`, `PORT` và `USERNAME`, `PASSWORD` sẽ �
 
 ### 3.1 Yêu cầu 1
 
-Viết chương trình chuyển đổi cột `value` dạng `json` string về dạng `row` có cấu trúc về in ra kết quả convert được.
+Viết chương trình chuyển đổi cột `value` dạng `json` string về dạng `row` có cấu trúc và in ra kết quả convert được.
 
 Gợi ý: Sử dụng `StructType` và hàm `from_json`
 
