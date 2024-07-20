@@ -2,23 +2,28 @@
 
 ## Overview
 
+Bài toán kết hợp việc sử dụng `kafka` và `spark`. Sử dụng `spark` đọc dữ liệu từ `kafka` sau đó xử lý, tính toán và lưu
+trữ trong db `postgre`
+
 ## Bài toán
 
-Đầu vào:
+**Đầu vào:**
 
 - Kafka: Cụm `Kafka` setup ở dưới local và `topic` chứa dữ liệu về hành vi người dùng trên website đã làm trong project
   của module `Kafka`
 - Spark: Cụm `Spark` cài đặt dưới local trong khóa học
 - Schema của dữ liệu
 
-Đầu ra:
+**Đầu ra:**
 
+- Thiết kế db
 - Chương trình code xử lý yêu cầu của dự án
-- Dữ liệu sau xử lý được lưu trong database `Postgre`
+- Kết quả của các báo cáo theo yêu cầu
+- Dữ liệu được lưu trong database `Postgre`
 
 ## Mô tả
 
-Schema của dữ liệu đầu vào:
+**Schema của dữ liệu đầu vào:**
 
 | Tên          | Kiểu dữ liệu  | Mô tả                                                   | Ví dụ                                                                                                                                                               |
 |--------------|---------------|---------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -37,17 +42,17 @@ Schema của dữ liệu đầu vào:
 | time_stamp   | Long          | Timestamp thời điểm bản ghi log được tạo                |                                                                                                                                                                     |
 | user_agent   | String        | Thông tin của browser, thiết bị                         | Mozilla/5.0 (iPhone; CPU iPhone OS 13_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1 Mobile/15E148 Safari/604.1                           |
 
-Yêu cầu:
+**Yêu cầu:**
 
-Tính số lượt view sản phầm trong ngày hiện tại theo các chiều sau:
-giờ, `domain`, `store_id`, `referrer_url`, `product_id`
+Thiết kế db và viết chương trình đưa ra các báo cáo như sau:
 
 - Top 10 `product_id` có lượt view cao nhất trong ngày hiện tại
-- Top 10 `domain` có lượt view cao nhất trong ngày hiện tại
+- Top 10 quốc gia có lượt view cao nhất trong ngày hiện tại (quốc gia được lấy dựa vào `domain`)
 - Top 5 `referrer_url` có lượt view cao nhất trong ngày hiện tại
-- Với `domain` có lượt view cao nhất, lấy ra danh sách các `store_id` và lượt view tương ứng, sắp xếp theo lượt view
+- Với 1 quốc gia bất kỳ, lấy ra danh sách các `store_id` và lượt view tương ứng, sắp xếp theo lượt view
   giảm dần
 - Dữ liệu view phân bổ theo giờ của một `product_id` bất kỳ trong ngày
+- Dữ liệu view theo giờ của từng `browser`, `os`
 
 ## Phụ lục
 
@@ -61,6 +66,7 @@ docker run -ti --name test-spark \
 -p 4040:4040 \
 -v ./:/spark \
 -v spark_lib:/opt/bitnami/spark/.ivy2 \
+-v spark_data:/data \
 -e PYSPARK_DRIVER_PYTHON='python' \
 -e PYSPARK_PYTHON='./environment/bin/python' \
 unigap/spark:3.5 bash -c "python -m venv pyspark_venv &&
@@ -68,6 +74,7 @@ source pyspark_venv/bin/activate &&
 pip install -r /spark/requirements.txt &&
 venv-pack -o pyspark_venv.tar.gz &&
 spark-submit \
+--packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.1 \
 --archives pyspark_venv.tar.gz#environment \
 /spark/99-project/test.py"
 ```
