@@ -48,3 +48,30 @@ giờ, `domain`, `store_id`, `referrer_url`, `product_id`
 - Với `domain` có lượt view cao nhất, lấy ra danh sách các `store_id` và lượt view tương ứng, sắp xếp theo lượt view
   giảm dần
 - Dữ liệu view phân bổ theo giờ của một `product_id` bất kỳ trong ngày
+
+## Phụ lục
+
+**Cách chạy chương trình sử dụng thư viện ngoài thông qua virtual env**
+
+```
+docker container stop test-spark || true &&
+docker container rm test-spark || true &&
+docker run -ti --name test-spark \
+--network=streaming-network \
+-p 4040:4040 \
+-v ./:/spark \
+-v spark_lib:/opt/bitnami/spark/.ivy2 \
+-e PYSPARK_DRIVER_PYTHON='python' \
+-e PYSPARK_PYTHON='./environment/bin/python' \
+unigap/spark:3.5 bash -c "python -m venv pyspark_venv &&
+source pyspark_venv/bin/activate &&
+pip install -r /spark/requirements.txt &&
+venv-pack -o pyspark_venv.tar.gz &&
+spark-submit \
+--archives pyspark_venv.tar.gz#environment \
+/spark/99-project/test.py"
+```
+
+## Link tham khảo
+
+[Python Package Management](https://spark.apache.org/docs/latest/api/python/user_guide/python_packaging.html)
