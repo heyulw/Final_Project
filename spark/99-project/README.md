@@ -3,7 +3,7 @@
 ## Overview
 
 Bài toán kết hợp việc sử dụng `kafka` và `spark`. Sử dụng `spark` đọc dữ liệu từ `kafka` sau đó xử lý, tính toán và lưu
-trữ trong db `postgre`
+trữ vào db `postgres`
 
 ## Bài toán
 
@@ -19,7 +19,7 @@ trữ trong db `postgre`
 - Thiết kế db
 - Chương trình code xử lý yêu cầu của dự án
 - Kết quả của các báo cáo theo yêu cầu
-- Dữ liệu được lưu trong database `Postgre`
+- Dữ liệu được lưu trong database `Postgres`
 
 ## Mô tả
 
@@ -74,7 +74,7 @@ source pyspark_venv/bin/activate &&
 pip install -r /spark/requirements.txt &&
 venv-pack -o pyspark_venv.tar.gz &&
 spark-submit \
---packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.1 \
+--packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.1,org.postgresql:postgresql:42.7.3 \
 --archives pyspark_venv.tar.gz#environment \
 /spark/99-project/test.py"
 ```
@@ -82,3 +82,5 @@ spark-submit \
 ## Link tham khảo
 
 [Python Package Management](https://spark.apache.org/docs/latest/api/python/user_guide/python_packaging.html)
+
+[JDBC To Other Databases](https://spark.apache.org/docs/latest/sql-data-sources-jdbc.html)
