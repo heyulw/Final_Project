@@ -20,7 +20,7 @@ docker run -ti --name kafka-streaming \
 -p 4040:4040 \
 -v ./:/spark \
 -v spark_lib:/opt/bitnami/spark/.ivy2 \
--e KAFKA_BOOTSTRAP_SERVERS='HOST1:HOST1,HOST2:PORT2,HOST3:PORT3' \
+-e KAFKA_BOOTSTRAP_SERVERS='HOST1:PORT1,HOST2:PORT2,HOST3:PORT3' \
 -e KAFKA_SASL_JAAS_CONFIG='org.apache.kafka.common.security.plain.PlainLoginModule required username="USERNAME" password="PASSWORD";' \
 unigap/spark:3.5 spark-submit \
 --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.1 \
