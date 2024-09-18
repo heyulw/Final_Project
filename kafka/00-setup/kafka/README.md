@@ -22,7 +22,7 @@ docker compose logs kafka-0 -f -n 100
 Run inside kafka's containers
 
 ```shell
-docker exec -ti kafka-kafka-0-1 bash
+docker exec -ti kafka-0 bash
 ```
 
 Producer
