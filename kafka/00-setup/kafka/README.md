@@ -28,13 +28,13 @@ docker exec -ti kafka-0 bash
 Producer
 
 ```shell
-kafka-console-producer --producer.config /etc/kafka/producer.properties --bootstrap-server kafka-0:9092,kafka-1:9092,kafka-2:9092 --topic test
+kafka-console-producer --producer.config /etc/kafka/producer.properties --bootstrap-server kafka-0:29092,kafka-1:29092,kafka-2:29092 --topic test
 ```
 
 Consumer
 
 ```shell
-kafka-console-consumer --consumer.config /etc/kafka/consumer.properties --bootstrap-server kafka-0:9092,kafka-1:9092,kafka-2:9092 --topic test --from-beginning
+kafka-console-consumer --consumer.config /etc/kafka/consumer.properties --bootstrap-server kafka-0:29092,kafka-1:29092,kafka-2:29092 --topic test --from-beginning
 ```
 
 ## 3. Monitor
