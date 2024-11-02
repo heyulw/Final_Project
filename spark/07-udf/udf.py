@@ -1,23 +1,12 @@
 import os
-import re
 
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import udf, expr
+from pyspark.sql.functions import expr
 from pyspark.sql.types import StringType
 
+import gender_util.gender_util as gender_util
 import util.config as conf
 from util.logger import Log4j
-
-
-def parse_gender(gender):
-    male_pattern = r"^m$|^male$|^man$"
-    female_pattern = r"^f$|^female$|^woman$"
-    if re.search(male_pattern, gender.lower()):
-        return "Male"
-    if re.search(female_pattern, gender.lower()):
-        return "Female"
-    return "Unknown"
-
 
 if __name__ == '__main__':
     working_dir = os.getcwd()
@@ -39,17 +28,16 @@ if __name__ == '__main__':
     log.info("survey_df:")
     survey_df.show()
 
-    parse_gender_udf = udf(parse_gender, returnType=StringType())
     log.info("Catalog Entry:")
     for r in spark.catalog.listFunctions():
         if "parse_gender" in r.name:
             log.info(r)
 
-    survey_df.withColumn("Gender", parse_gender_udf("Gender")) \
+    survey_df.withColumn("Gender", gender_util.parse_gender_udf("Gender")) \
         .select("Age", "Gender", "Country", "state", "no_employees") \
         .show()
 
-    spark.udf.register("parse_gender_udf", parse_gender, StringType())
+    spark.udf.register("parse_gender_udf", gender_util.parse_gender, StringType())
     log.info("Catalog Entry:")
     for r in spark.catalog.listFunctions():
         if "parse_gender" in r.name:
