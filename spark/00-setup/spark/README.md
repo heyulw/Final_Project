@@ -1,3 +1,9 @@
+## Overview
+
+Hướng dẫn này giúp bạn cài đặt một cụm Spark gồm 1 master và 2 workers sử dụng docker có mô hình như sau:
+
+![](img/spark-containers.png)
+
 ## 1. Create network
 
 ```shell

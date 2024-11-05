@@ -1,3 +1,9 @@
+## Overview
+
+Hướng dẫn này giúp bạn cài đặt một cụm Kafka gồm 3 nodes sử dụng docker có mô hình như sau:
+
+![](img/kafka-containers.png)
+
 ## 1. Create network
 
 ```shell
