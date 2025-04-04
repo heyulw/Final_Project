@@ -145,7 +145,6 @@ services:
 networks:
   streaming-network:
     external: true
-
 volumes:
   kafka_data_0:
     driver: local

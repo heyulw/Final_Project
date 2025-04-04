@@ -3,3 +3,6 @@ venv-pack
 pyyaml
 ua-parser
 user-agents
+tldextract
+pycountry
+psycopg2-binary

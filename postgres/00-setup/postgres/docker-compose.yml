@@ -3,8 +3,8 @@ services:
     image: "postgres:16.3"
     networks:
       - streaming-network
-    hostname: postgres
-    container_name: postgres
+    hostname: postgres_alternative
+    container_name: postgres_alternative
     volumes:
       - postgres_data:/var/lib/postgresql/data
     environment:
@@ -13,7 +13,7 @@ services:
       POSTGRES_DB: "postgres"
       PGDATA: "/var/lib/postgresql/data"
     ports:
-      - "5432:5432"
+      - "5433:5432"
 
   adminer:
     image: "adminer:4.8.1"
@@ -27,7 +27,6 @@ services:
 networks:
   streaming-network:
     external: true
-
 volumes:
   postgres_data:
     driver: local

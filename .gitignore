@@ -188,3 +188,7 @@ build/
 
 ### VS Code ###
 .vscode/
+airflow/00-setup/airflow/config/config.py
+kafka/00-setup/kafka/config/kafka/kafka_server_jaas.conf
+kafka/00-setup/kafka/mykafka.conf
+spark/11-kafka-streaming/spark.conf

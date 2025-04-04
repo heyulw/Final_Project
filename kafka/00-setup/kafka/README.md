@@ -9,7 +9,6 @@ Hướng dẫn này giúp bạn cài đặt một cụm Kafka gồm 3 nodes sử
 ```shell
 docker network create streaming-network --driver bridge
 ```
-
 ## 2. Run kafka
 
 ```shell
